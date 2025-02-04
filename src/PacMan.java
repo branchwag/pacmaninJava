@@ -20,6 +20,10 @@ public class PacMan extends JPanel implements ActionListener, KeyListener{
 
         int startX;
         int startY;
+        char direction = 'U'; //UDLR
+        int velocityX = 0;
+        int velocityY = 0;
+
 
         Block(Image image, int x, int y, int width, int height) {
             this.image = image;
@@ -29,6 +33,30 @@ public class PacMan extends JPanel implements ActionListener, KeyListener{
             this.height = height;
             this.startX = x;
             this.startY = y;
+        }
+
+        void updateDirection(char direction) {
+            this.direction = direction;
+            updateVelocity();
+        }
+
+        void updateVelocity() {
+            if (this.direction == 'U') {
+                this.velocityX = 0;
+                this.velocityY = -tileSize/4;
+            }
+            else if (this.direction == 'D') {
+                this.velocityX = 0;
+                this.velocityY = tileSize/4;
+            }
+            else if (this.direction == 'L') {
+                this.velocityX = -tileSize/4;
+                this.velocityY = 0;
+            }
+            else if (this.direction == 'R') {
+                this.velocityX = tileSize/4;
+                this.velocityY = 0;
+            }
         }
     }
 
@@ -175,8 +203,14 @@ public class PacMan extends JPanel implements ActionListener, KeyListener{
         }
     }
 
+    public void move() {
+        pacman.x += pacman.velocityX;
+        pacman.y += pacman.velocityY;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+        move();
         repaint();
     }
 
@@ -188,7 +222,19 @@ public class PacMan extends JPanel implements ActionListener, KeyListener{
 
     @Override
     public void keyReleased(KeyEvent e) {
-        System.out.println("KeyEvent: " + e.getKeyCode());
+        //System.out.println("KeyEvent: " + e.getKeyCode());
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            pacman.updateDirection('U');
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            pacman.updateDirection('D');
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            pacman.updateDirection('L');
+        }
+        else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            pacman.updateDirection('R');
+        }
     }
 
 }
