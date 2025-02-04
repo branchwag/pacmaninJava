@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.util.HashSet;
 import javax.swing.*;
@@ -93,9 +94,9 @@ public class PacMan extends JPanel {
         pacmanRightImage = new ImageIcon(getClass().getResource("./imgs/pacmanRight.png")).getImage();
         
         loadMap();
-        System.out.println(walls.size());
-        System.out.println(foods.size());
-        System.out.println(ghosts.size());
+        //System.out.println(walls.size());
+        //System.out.println(foods.size());
+        //System.out.println(ghosts.size());
     }
 
     public void loadMap() {
@@ -142,4 +143,12 @@ public class PacMan extends JPanel {
         }
     }       
     
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        draw(g);
+    }
+
+    public void draw(Graphics g) {
+        g.fillRect(pacman.x, pacman.y, pacman.width, pacman.height);
+    }
 }
