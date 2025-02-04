@@ -2,10 +2,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashSet;
 import javax.swing.*;
 
-public class PacMan extends JPanel {
+public class PacMan extends JPanel implements ActionListener{
 
     class Block {
         int x;
@@ -76,6 +78,8 @@ public class PacMan extends JPanel {
     HashSet<Block> ghosts;
     Block pacman;
 
+    Timer gameLoop;
+
     PacMan() {
         setPreferredSize(new Dimension(boardWidth, boardHeight));
         setBackground(Color.BLACK);
@@ -97,6 +101,8 @@ public class PacMan extends JPanel {
         //System.out.println(walls.size());
         //System.out.println(foods.size());
         //System.out.println(ghosts.size());
+        gameLoop = new Timer(50, this); //20fps bc 1000/50
+        gameLoop.start();
     }
 
     public void loadMap() {
@@ -164,4 +170,10 @@ public class PacMan extends JPanel {
             g.fillRect(food.x, food.y, food.width, food.height);
         }
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        repaint();
+    }
+
 }
